@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Путешествия по Цифровым Дорожкам</title>
+    <link>https://zvladimir.github.io/tags/</link>
+    <description>Recent content in Tags on Путешествия по Цифровым Дорожкам</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 03 Nov 2023 23:05:30 +0400</lastBuildDate><atom:link href="https://zvladimir.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rust</title>
+      <link>https://zvladimir.github.io/tags/rust/</link>
+      <pubDate>Fri, 03 Nov 2023 23:05:30 +0400</pubDate>
+      
+      <guid>https://zvladimir.github.io/tags/rust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>stm32</title>
+      <link>https://zvladimir.github.io/tags/stm32/</link>
+      <pubDate>Fri, 03 Nov 2023 23:05:30 +0400</pubDate>
+      
+      <guid>https://zvladimir.github.io/tags/stm32/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rcc</title>
+      <link>https://zvladimir.github.io/tags/rcc/</link>
+      <pubDate>Fri, 03 Nov 2023 22:47:00 +0400</pubDate>
+      
+      <guid>https://zvladimir.github.io/tags/rcc/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

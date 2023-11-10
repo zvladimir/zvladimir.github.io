@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rust on Путешествия по Цифровым Дорожкам</title>
+    <link>https://zvladimir.github.io/tags/rust/</link>
+    <description>Recent content in rust on Путешествия по Цифровым Дорожкам</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 03 Nov 2023 23:05:30 +0400</lastBuildDate><atom:link href="https://zvladimir.github.io/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>STM32 &amp; Rust - Hello World по Embedded или мигаем светодиодом</title>
+      <link>https://zvladimir.github.io/2023/11/stm32-rust-hello-world-%D0%BF%D0%BE-embedded-%D0%B8%D0%BB%D0%B8-%D0%BC%D0%B8%D0%B3%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BE%D0%B4%D0%BE%D0%BC/</link>
+      <pubDate>Fri, 03 Nov 2023 23:05:30 +0400</pubDate>
+      
+      <guid>https://zvladimir.github.io/2023/11/stm32-rust-hello-world-%D0%BF%D0%BE-embedded-%D0%B8%D0%BB%D0%B8-%D0%BC%D0%B8%D0%B3%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BE%D0%B4%D0%BE%D0%BC/</guid>
+      <description>В мире встраиваемой разработки, &amp;ldquo;Hello World&amp;rdquo; обычно означает мигание светодиодом. В данной статье рассматриваются бегущие огоньки на трех светодиодах отладочной платы 32F723EDISCOVERY.
+Светодиоды на отладочной плате подключены к следующим пинам:
+LD1 (синий) - пин PA5 LD5 (красный) - пин PA7 LD6 (зеленый) - пин PB1 Ниже приведен код, последовательно включающий каждый светодиод с заданной задержкой в основном цикле работы программы. Github
+#![no_std]#![no_main]use cortex_m_rt::entry;use cortex_m::delay::Delay;#[allow(unused_imports)]use panic_halt;use stm32f7xx_hal::{pac,prelude::*,};const P_MS:u32 = 500; // время в течении которого будет гореть один светодиод#[entry]fn main() -&amp;gt; !</description>
+    </item>
+    
+    <item>
+      <title>STM32 &amp; Rust - RCC Система тактирования</title>
+      <link>https://zvladimir.github.io/2023/11/stm32-rust-rcc-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0-%D1%82%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F/</link>
+      <pubDate>Fri, 03 Nov 2023 22:47:00 +0400</pubDate>
+      
+      <guid>https://zvladimir.github.io/2023/11/stm32-rust-rcc-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0-%D1%82%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F/</guid>
+      <description>Как известно, система тактирования в микроконтроллерах STM32 достаточно сложная и разветвленная. При использовании библиотеки HAL у нас нет такого удобного инструмента конфигурирования RCC как CubeMX. Но зато имеется удобный API самой библиотеки, куда удобнее оригинального HAL от ST.
+Разбираться с RCC будем на примере отладочной платы 32F723EDISCOVERY и библиотеки stm32f7xx_hal.
+В мануале RM0431 на странице 130 приведено описание системы тактирования.
+В модуль RCC библиотеки HAL, имеется структура CFGR со следующими основными методами:</description>
+    </item>
+    
+  </channel>
+</rss>

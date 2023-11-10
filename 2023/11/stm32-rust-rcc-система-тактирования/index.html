@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<head>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+<link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    
+    
+    <title>STM32 &amp; Rust - RCC Система тактирования - Путешествия по Цифровым Дорожкам</title>
+    
+    
+    <meta name="author" content="Зибцев Владимир" /> 
+     
+    
+    
+    <meta name="keywords" content="stm32, rust, rcc" />
+    
+    <meta property="og:title" content="STM32 &amp; Rust - RCC Система тактирования" />
+<meta property="og:description" content="Как известно, система тактирования в микроконтроллерах STM32 достаточно сложная и разветвленная. При использовании библиотеки HAL у нас нет такого удобного инструмента конфигурирования RCC как CubeMX. Но зато имеется удобный API самой библиотеки, куда удобнее оригинального HAL от ST.
+Разбираться с RCC будем на примере отладочной платы 32F723EDISCOVERY и библиотеки stm32f7xx_hal.
+В мануале RM0431 на странице 130 приведено описание системы тактирования.
+В модуль RCC библиотеки HAL, имеется структура CFGR со следующими основными методами:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zvladimir.github.io/2023/11/stm32-rust-rcc-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0-%D1%82%D0%B0%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-03T22:47:00+04:00" />
+<meta property="article:modified_time" content="2023-11-03T22:47:00+04:00" />
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="STM32 &amp; Rust - RCC Система тактирования"/>
+<meta name="twitter:description" content="Как известно, система тактирования в микроконтроллерах STM32 достаточно сложная и разветвленная. При использовании библиотеки HAL у нас нет такого удобного инструмента конфигурирования RCC как CubeMX. Но зато имеется удобный API самой библиотеки, куда удобнее оригинального HAL от ST.
+Разбираться с RCC будем на примере отладочной платы 32F723EDISCOVERY и библиотеки stm32f7xx_hal.
+В мануале RM0431 на странице 130 приведено описание системы тактирования.
+В модуль RCC библиотеки HAL, имеется структура CFGR со следующими основными методами:"/>
+
+
+    
+    
+    
+    
+
+    
+    
+    <link rel="stylesheet" href="https://zvladimir.github.io/scss/main.min.cb240aff5e408680ad64a7733bb02a0f95fdf3add3dbfa70a6e73ca855f3e64b.css" integrity="sha256-yyQK/15AhoCtZKdzO7AqD5X9863T2/pwpuc8qFXz5ks=" crossorigin="anonymous" media="screen">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+  
+</head>
+<body>
+  <span class="mobile btn-mobile-menu">
+
+    <i class="fa fa-list btn-mobile-menu__icon"></i>
+    <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+
+  </span>
+
+  <header class="  panel-cover panel-cover--collapsed " style="background-image: url('/images/background-cover.jpg')">
+
+    <div class="panel-main">
+  
+      <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+  
+          <h1 class="panel-cover__title panel-title"><a href="/" title="Homepage of Путешествия по Цифровым Дорожкам" class="blog-button">Путешествия по Цифровым Дорожкам</a></h1>
+          
+          <hr class="panel-cover__divider" />
+          <p class="panel-cover__description"></p>
+          <hr class="panel-cover__divider panel-cover__divider--secondary" />
+          
+          
+          
+          <div class="navigation-wrapper">
+            <div>
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+				  <li class="navigation__item"><a href="/" title="Home">Home</a></li>
+                  <li class="navigation__item"><a href="/#blog" title="Blog" class="blog-button">Blog</a></li>
+				  <li class="navigation__item"><a href="/tags" title="Tags">Tags</a></li>
+				  <li class="navigation__item"><a href="https://t.me/desialsi" target="_blank" title="Telegram channel">TG channel</a></li>
+                </ul>
+              </nav>
+            </div>
+            
+            <div><nav class="cover-navigation navigation--social">
+    <ul class="navigation">
+  
+    
+  
+    
+    
+    <li class="navigation__item">
+      <a href="https://github.com/zvladimir" title="@zvladimir" target="_blank">
+        <i class='social fa fa-github'></i>
+        <span class="label">Github</span>
+      </a>
+    </li>
+    
+    
+    
+
+    
+    
+    <li class="navigation__item">
+      <a href="https://www.linkedin.com/in/zibtsev-vladimir" title="@zibtsev-vladimir" target="_blank">
+        <i class='social fa fa-linkedin'></i>
+        <span class="label">Linkedin</span>
+      </a>
+    </li>
+    
+  
+    
+  
+    
+    <li class="navigation__item">
+      <a href="/index.xml" rel="author" title="RSS" target="_blank">
+        <i class='social fa fa-rss'></i>
+        <span class="label">RSS</span>
+      </a>
+    </li>
+  
+    
+    
+    <li class="navigation__item">
+      <a href="mailto:onev@onevcat.com" title="Contact me">
+        <i class='social fa fa-envelope'></i>
+        <span class="label">Email</span>
+      </a>
+    </li>
+    
+  
+    </ul>
+  </nav>
+  </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="panel-cover--overlay cover-blue"></div>
+      
+    </div>
+  </header>
+  
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+
+        
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <div class="post-meta">
+            <time datetime=" 2023-11-03 22:47:00 &#43;0400 " itemprop="datePublished" class="post-meta__date date">2023-11-03</time>
+             <span class="post-meta__tags tags">   • <a href="https://zvladimir.github.io/tags/stm32">stm32</a>   • <a href="https://zvladimir.github.io/tags/rust">rust</a>   • <a href="https://zvladimir.github.io/tags/rcc">rcc</a>  </span> 
+        </div>
+        <h1 class="post-title">STM32 &amp; Rust - RCC Система тактирования</h1>
+    </header>
+    <section class="post">
+        <p>Как известно, система тактирования в микроконтроллерах STM32 достаточно сложная и разветвленная. При использовании библиотеки HAL у нас нет такого удобного инструмента конфигурирования RCC как CubeMX. Но зато имеется удобный API самой библиотеки, куда удобнее оригинального HAL от ST.</p>
+<p>Разбираться с RCC будем на примере отладочной платы <a href="https://www.st.com/en/evaluation-tools/32f723ediscovery.html">32F723EDISCOVERY</a> и библиотеки <a href="https://docs.rs/stm32f7xx-hal/latest/stm32f7xx_hal/">stm32f7xx_hal</a>.</p>
+<p>В мануале <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwi0_aKulpqCAxX0g_0HHffVBikQFnoECBQQAQ&amp;url=https%3A%2F%2Fwww.st.com%2Fresource%2Fen%2Freference_manual%2Frm0431-stm32f72xxx-and-stm32f73xxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf&amp;usg=AOvVaw3c_qsvAC103Lh9HGnsTCju&amp;opi=89978449">RM0431</a> на странице 130 приведено описание системы тактирования.</p>
+<p><img src="images/9d29358630c2aad2eed82.png" alt="STM32F723 - Clock tree" title="STM32F723 - Clock tree"></p>
+<p>В модуль RCC библиотеки HAL, имеется структура <a href="https://docs.rs/stm32f7xx-hal/latest/stm32f7xx_hal/rcc/struct.CFGR.html">CFGR</a> со следующими основными методами:</p>
+<ul>
+<li>hse - конфигурирование HSE генератора. Варианты режимов могут быть или HSEClockMode::Bypass в случае внешнего тактового генератора или HSEClockMode::Oscillator в случае кварчевого резонатора;</li>
+<li>hclk - установка частоты HCLK. Случится паника если задача частота выше 216МГц;</li>
+<li>sysclk - установка частоты SYSCLK. Случится паника если частота меньше 12.5МГц или выше 216МГц;</li>
+<li>pclk1 - установка частоты PCLK1, если частота не задана используется максимально поддерживаемая частоты. Случится паника если частота меньше 12.5МГц или выше 54МГц;</li>
+<li>pclk2- установка частоты PCLK2, если частота не задана используется максимально поддерживаемая частоты. Случится паника если частота меньше 12.5МГц или выше 108МГц;</li>
+<li>use_pll - включает PLL. Важно должна быть задача частота sysclk или использован метод use_pll48clk, иначе PLL не будет включён;</li>
+<li>pllm - установка делителя PLL. Случится паника если делитель меньше 2 и больше 63;</li>
+<li>plln - установка умножителя PLL. Случится паника если умножитель меньше 50 и больше 432;</li>
+<li>pllp - установка делителя PLL;</li>
+<li>pllq - установка делителя PLL для клоков на 48МГц. Случится паника если делитель меньше 2 и больше 15 (включительно);</li>
+<li>mco1 - установка источника для MCO1. Возможны варианты MCO1 {Hsi, Lse, Hse, Pll};</li>
+<li>mco1pre - установка делителя частоты для MCO1;</li>
+<li>mco2- установка источника для MCO2. Возможны варианты MCO2 {Sysclk, Plli2s, Hse, Pll};</li>
+<li>mco2pre- установка делителя частоты для MCO2;</li>
+<li>set_default - конфигурация клоков по умолчанию. Частота SYSCLK устанавливается в 216МГц;</li>
+<li>freeze - &ldquo;заморозка&rdquo; конфигурации, менять во время выполнения нельзя.</li>
+</ul>
+<p>Ниже приведенный код конфигурирует систему тактирования как показано на диаграмме из CubeMX.
+<img src="images/f4de3df3990ecc29e8429.png" alt="CubeMX - Clock configuration" title="CubeMX - Clock configuration"></p>
+<pre tabindex="0"><code>#![no_std]  
+#![no_main]  
+  
+use cortex_m_rt::entry;  
+use cortex_m_semihosting::hprintln;  
+#[allow(unused_imports)]  
+use panic_halt;  
+use stm32f7xx_hal::{  
+   gpio::Speed,  
+   pac,  
+   prelude::*,  
+   rcc::{HSEClock, HSEClockMode, MCO1, MCO2, MCOPRE},  
+};  
+  
+#[entry]  
+fn main() -&gt; ! {  
+   let dp = pac::Peripherals::take().unwrap();  
+   let rcc = dp.RCC.constrain();  
+  
+   let clocks = rcc  
+       .cfgr  
+       .hse(HSEClock::new(25.MHz(), HSEClockMode::Bypass))  
+       .sysclk(108.MHz())  
+       .hclk(54.MHz())  
+       .pclk1(13500.kHz())  
+       .pclk2(27.MHz())  
+       .mco1(MCO1::Hsi)  
+       .mco1pre(MCOPRE::Div4)  
+       .mco2(MCO2::Hse)  
+       .mco2pre(MCOPRE::Div5)  
+       .freeze();  
+  
+   hprintln!(&#34;{:?}&#34;, clocks);  
+  
+   let gpioa = dp.GPIOA.split();  
+   let gpioc = dp.GPIOC.split();  
+  
+   let _mco1 = gpioa.pa8.into_alternate::&lt;0&gt;().set_speed(Speed::VeryHigh);  
+   let _mco2 = gpioc.pc9.into_alternate::&lt;0&gt;().set_speed(Speed::VeryHigh);  
+  
+   loop {}  
+}
+</code></pre><p>Отладочный вывод показывает, что всё сконфигурировано как ожидается
+<img src="images/fc5dc393c5d30a0234636.png" alt=""></p>
+<p>Подключение логического анализатора к пинам PA8 (MCO1) и PC9 (MCO2) показывает что-то странное. Частота PA8 соответствует ожиданиям в 4МГц, а частота PC9 5.333Мгц, вместо ожидаемых 5МГц и плавает (или 4МГц или 5.333МГц).
+<img src="images/38c12aa7566874fa33a77.png" alt="PA8 - MCO1 / HSI" title="PA8 - MCO1 / HSI"></p>
+<p><img src="images/824ed8a66327f983813a4.png" alt="PC9 - MCO2 / HSE" title="PC9 - MCO2 / HSE"></p>
+<p>Сейчас через STM32CubeProgrammer посмотрим конфигурацию RCC и сравним с RM0431.
+<img src="images/36bc662fb923c996ce73e.png" alt="Регистр RCC - CR" title="Регистр RCC - CR"></p>
+<p><img src="images/49cf44c068665388b3716.png" alt="RM0431 страница 140" title="RM0431 страница 140"></p>
+<p><img src="images/fb5b719a97042317bd2fd.png" alt="Регистр RCC - CFGR" title="Регистр RCC - CFGR"></p>
+<p><img src="images/6d2334a777dd10ae2e4f8.png" alt="RM0431 страница 144" title="RM0431 страница 144"></p>
+<p>Конфигурация регистров соответствует тому исходному коду который приведен выше.</p>
+
+    </section>
+</article>
+
+        <section class="footer">
+    <footer>
+        <span class="footer__copyright"></span>
+        <span class="footer__copyright"></span>
+    </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+  
+</body>
+

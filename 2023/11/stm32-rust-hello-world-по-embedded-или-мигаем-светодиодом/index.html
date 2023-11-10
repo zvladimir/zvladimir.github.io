@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<head>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+<link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    
+    
+    <title>STM32 &amp; Rust - Hello World по Embedded или мигаем светодиодом - Путешествия по Цифровым Дорожкам</title>
+    
+    
+    <meta name="author" content="Зибцев Владимир" /> 
+     
+    
+    
+    <meta name="keywords" content="stm32, rust" />
+    
+    <meta property="og:title" content="STM32 &amp; Rust - Hello World по Embedded или мигаем светодиодом" />
+<meta property="og:description" content="В мире встраиваемой разработки, &ldquo;Hello World&rdquo; обычно означает мигание светодиодом. В данной статье рассматриваются бегущие огоньки на трех светодиодах отладочной платы 32F723EDISCOVERY.
+Светодиоды на отладочной плате подключены к следующим пинам:
+LD1 (синий) - пин PA5 LD5 (красный) - пин PA7 LD6 (зеленый) - пин PB1 Ниже приведен код, последовательно включающий каждый светодиод с заданной задержкой в основном цикле работы программы. Github
+#![no_std]#![no_main]use cortex_m_rt::entry;use cortex_m::delay::Delay;#[allow(unused_imports)]use panic_halt;use stm32f7xx_hal::{pac,prelude::*,};const P_MS:u32 = 500; // время в течении которого будет гореть один светодиод#[entry]fn main() -&gt; !" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://zvladimir.github.io/2023/11/stm32-rust-hello-world-%D0%BF%D0%BE-embedded-%D0%B8%D0%BB%D0%B8-%D0%BC%D0%B8%D0%B3%D0%B0%D0%B5%D0%BC-%D1%81%D0%B2%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BE%D0%B4%D0%BE%D0%BC/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-11-03T23:05:30+04:00" />
+<meta property="article:modified_time" content="2023-11-03T23:05:30+04:00" />
+
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="STM32 &amp; Rust - Hello World по Embedded или мигаем светодиодом"/>
+<meta name="twitter:description" content="В мире встраиваемой разработки, &ldquo;Hello World&rdquo; обычно означает мигание светодиодом. В данной статье рассматриваются бегущие огоньки на трех светодиодах отладочной платы 32F723EDISCOVERY.
+Светодиоды на отладочной плате подключены к следующим пинам:
+LD1 (синий) - пин PA5 LD5 (красный) - пин PA7 LD6 (зеленый) - пин PB1 Ниже приведен код, последовательно включающий каждый светодиод с заданной задержкой в основном цикле работы программы. Github
+#![no_std]#![no_main]use cortex_m_rt::entry;use cortex_m::delay::Delay;#[allow(unused_imports)]use panic_halt;use stm32f7xx_hal::{pac,prelude::*,};const P_MS:u32 = 500; // время в течении которого будет гореть один светодиод#[entry]fn main() -&gt; !"/>
+
+
+    
+    
+    
+    
+
+    
+    
+    <link rel="stylesheet" href="https://zvladimir.github.io/scss/main.min.cb240aff5e408680ad64a7733bb02a0f95fdf3add3dbfa70a6e73ca855f3e64b.css" integrity="sha256-yyQK/15AhoCtZKdzO7AqD5X9863T2/pwpuc8qFXz5ks=" crossorigin="anonymous" media="screen">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+  
+</head>
+<body>
+  <span class="mobile btn-mobile-menu">
+
+    <i class="fa fa-list btn-mobile-menu__icon"></i>
+    <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+
+  </span>
+
+  <header class="  panel-cover panel-cover--collapsed " style="background-image: url('/images/background-cover.jpg')">
+
+    <div class="panel-main">
+  
+      <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+  
+          <h1 class="panel-cover__title panel-title"><a href="/" title="Homepage of Путешествия по Цифровым Дорожкам" class="blog-button">Путешествия по Цифровым Дорожкам</a></h1>
+          
+          <hr class="panel-cover__divider" />
+          <p class="panel-cover__description"></p>
+          <hr class="panel-cover__divider panel-cover__divider--secondary" />
+          
+          
+          
+          <div class="navigation-wrapper">
+            <div>
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+				  <li class="navigation__item"><a href="/" title="Home">Home</a></li>
+                  <li class="navigation__item"><a href="/#blog" title="Blog" class="blog-button">Blog</a></li>
+				  <li class="navigation__item"><a href="/tags" title="Tags">Tags</a></li>
+				  <li class="navigation__item"><a href="https://t.me/desialsi" target="_blank" title="Telegram channel">TG channel</a></li>
+                </ul>
+              </nav>
+            </div>
+            
+            <div><nav class="cover-navigation navigation--social">
+    <ul class="navigation">
+  
+    
+  
+    
+    
+    <li class="navigation__item">
+      <a href="https://github.com/zvladimir" title="@zvladimir" target="_blank">
+        <i class='social fa fa-github'></i>
+        <span class="label">Github</span>
+      </a>
+    </li>
+    
+    
+    
+
+    
+    
+    <li class="navigation__item">
+      <a href="https://www.linkedin.com/in/zibtsev-vladimir" title="@zibtsev-vladimir" target="_blank">
+        <i class='social fa fa-linkedin'></i>
+        <span class="label">Linkedin</span>
+      </a>
+    </li>
+    
+  
+    
+  
+    
+    <li class="navigation__item">
+      <a href="/index.xml" rel="author" title="RSS" target="_blank">
+        <i class='social fa fa-rss'></i>
+        <span class="label">RSS</span>
+      </a>
+    </li>
+  
+    
+    
+    <li class="navigation__item">
+      <a href="mailto:onev@onevcat.com" title="Contact me">
+        <i class='social fa fa-envelope'></i>
+        <span class="label">Email</span>
+      </a>
+    </li>
+    
+  
+    </ul>
+  </nav>
+  </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div class="panel-cover--overlay cover-blue"></div>
+      
+    </div>
+  </header>
+  
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+
+        
+<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+    <header class="post-header">
+        <div class="post-meta">
+            <time datetime=" 2023-11-03 23:05:30 &#43;0400 " itemprop="datePublished" class="post-meta__date date">2023-11-03</time>
+             <span class="post-meta__tags tags">   • <a href="https://zvladimir.github.io/tags/stm32">stm32</a>   • <a href="https://zvladimir.github.io/tags/rust">rust</a>  </span> 
+        </div>
+        <h1 class="post-title">STM32 &amp; Rust - Hello World по Embedded или мигаем светодиодом</h1>
+    </header>
+    <section class="post">
+        <p>В мире встраиваемой разработки, &ldquo;Hello World&rdquo; обычно означает мигание светодиодом. В данной статье рассматриваются бегущие огоньки на трех светодиодах отладочной платы <a href="https://www.st.com/en/evaluation-tools/32f723ediscovery.html">32F723EDISCOVERY</a>.</p>
+<p><img src="images/20231029234058.png" alt="Схема отладочной платы" title="Схема отладочной платы"></p>
+<p>Светодиоды на отладочной плате подключены к следующим пинам:</p>
+<ul>
+<li>LD1 (синий) - пин PA5</li>
+<li>LD5 (красный) - пин PA7</li>
+<li>LD6 (зеленый) - пин PB1</li>
+</ul>
+<p>Ниже приведен код, последовательно включающий каждый светодиод с заданной задержкой в основном цикле работы программы.
+<a href="https://github.com/zvladimir/stm32_rust_blog/tree/9e1296824bd5ee6509449c568fd0e4c058720cdc/simple_example">Github</a></p>
+<pre tabindex="0"><code>#![no_std]
+#![no_main]
+
+use cortex_m_rt::entry;
+use cortex_m::delay::Delay;
+
+#[allow(unused_imports)]
+use panic_halt;
+use stm32f7xx_hal::{
+    pac,
+    prelude::*,
+};
+
+const P_MS:u32 = 500; // время в течении которого будет гореть один светодиод
+
+#[entry]
+fn main() -&gt; ! {
+    // инициализация периферии
+    let dp = pac::Peripherals::take().unwrap();
+    let cp = cortex_m::Peripherals::take().unwrap();
+
+    // настраиваем тактирование на значение по умолчанию
+    let rcc = dp.RCC.constrain();
+    let clocks = rcc.cfgr.set_defaults().freeze(); // частота системной шины 216МГц для STM32F723
+
+    // создаем переменные связанные с необходимыми портами
+    let gpioa = dp.GPIOA.split();
+    let gpiob = dp.GPIOB.split();
+
+    // создаем мутабельные переменные (т.к. будем менять состояние пинов) связанные  пинами на котрых находятся светодиоды
+    let mut led_blue = gpioa.pa5.into_push_pull_output();   // работа с режиме push-pull с пином 5 порта A
+    let mut led_red = gpioa.pa7.into_push_pull_output();    // работа с режиме push-pull с пином 7 порта A
+    let mut led_green = gpiob.pb1.into_push_pull_output();  // работа с режиме push-pull с пином 1 порта B
+
+    // состояние по умолчанию всех пинов 0
+    led_blue.set_low();
+    led_red.set_low();
+    led_green.set_low();
+
+    // задержка будет привязана к системе тактирования и измеряться в секундах
+    let mut delay = Delay::new(cp.SYST, clocks.sysclk().to_Hz());
+
+    // бесконечный цикл в котором будет происходить работа программы
+    loop {
+        // зажигаем синий светодиод на P_MS мс, остальные гасим
+        led_blue.set_high();
+        led_red.set_low();
+        led_green.set_low();
+        delay.delay_ms(P_MS);
+
+        // зажигаем красный светодиод на P_MS мс, остальные гасим
+        led_blue.set_low();
+        led_red.set_high();
+        led_green.set_low();
+        delay.delay_ms(P_MS);
+
+        // зажигаем зеленый светодиод на P_MS мс, остальные гасим
+        led_blue.set_low();
+        led_red.set_low();
+        led_green.set_high();
+        delay.delay_ms(P_MS);
+    }
+}
+</code></pre>
+    </section>
+</article>
+
+        <section class="footer">
+    <footer>
+        <span class="footer__copyright"></span>
+        <span class="footer__copyright"></span>
+    </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+  
+</body>
+
